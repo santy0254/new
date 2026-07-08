@@ -1,0 +1,19 @@
+[Unit]
+Description=PacketProof - monitor de perdida de paquetes
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Ajustá el usuario y la ruta si instalaste en otro lugar.
+User=%i
+WorkingDirectory=%h/packetproof
+ExecStart=/usr/bin/python -m packetproof -c %h/packetproof/config.toml run
+Restart=on-failure
+RestartSec=5
+# Bajo consumo: baja prioridad de CPU y de E/S.
+Nice=10
+IOSchedulingClass=idle
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,3 @@
+# Dependencia única para los gráficos. El monitoreo funciona sin ella
+# (los gráficos simplemente se omiten si matplotlib no está instalado).
+matplotlib>=3.7
