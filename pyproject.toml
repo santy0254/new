@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "packetproof"
+version = "1.0.0"
+description = "Monitor de pérdida de paquetes multiplataforma para documentar problemas del ISP"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "santy0254" }]
+keywords = ["network", "packet-loss", "ping", "isp", "monitoring", "diagnostics"]
+dependencies = [
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+packetproof = "packetproof.cli:main"
+
+[tool.setuptools]
+packages = ["packetproof"]

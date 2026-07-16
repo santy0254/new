@@ -1,0 +1,58 @@
+# PacketProof — configuración de ejemplo
+# Copiá este archivo a config.toml y ajustá a tu red.
+# Ejecutá:  packetproof -c config.toml run
+
+# Cada cuánto se envía un ping a cada objetivo (segundos).
+# 1.0 s es un buen equilibrio entre detalle y bajo consumo.
+interval_seconds = 1.0
+
+# Tiempo máximo de espera de cada ping (milisegundos).
+probe_timeout_ms = 1000
+
+# Segundos de contexto a guardar ANTES y DESPUÉS de cada evento.
+pre_event_seconds = 10
+post_event_seconds = 10
+
+# Corte de seguridad: si un evento dura más que esto, se cierra y se guarda
+# (evita eventos "infinitos" durante caídas largas). En segundos.
+max_event_seconds = 300
+
+# Un RTT por encima de este umbral (ms) en un objetivo de Internet cuenta
+# como degradación (dispara un evento de "latency").
+latency_threshold_ms = 300
+
+# Carpeta donde se guardan logs, gráficos y el reporte HTML.
+data_dir = "packetproof-data"
+
+# --- Objetivos ---
+# trigger = true  -> su pérdida/latencia DISPARA un evento (objetivos de Internet)
+# trigger = false -> referencia (router/LAN); no dispara, pero se grafica.
+# host = "auto"   -> detecta automáticamente la puerta de enlace por defecto.
+
+[[targets]]
+label = "Router / Gateway (LAN)"
+host = "auto"
+trigger = false
+
+[[targets]]
+label = "Cloudflare (1.1.1.1)"
+host = "1.1.1.1"
+trigger = true
+
+[[targets]]
+label = "Google (8.8.8.8)"
+host = "8.8.8.8"
+trigger = true
+
+[[targets]]
+label = "Quad9 (9.9.9.9)"
+host = "9.9.9.9"
+trigger = true
+
+# Consejo: agregá el primer salto de tu ISP (lo ves con `traceroute 8.8.8.8`
+# en CachyOS o `tracert 8.8.8.8` en Windows) como objetivo trigger para
+# ubicar exactamente dónde se pierde el paquete.
+# [[targets]]
+# label = "Primer salto ISP"
+# host = "10.0.0.1"
+# trigger = true
